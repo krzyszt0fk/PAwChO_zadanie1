@@ -27,7 +27,7 @@ COPY --from=builder /app /app
 
 # Zmienna środowiskowa PORT
 ENV PORT=3000
-#klucz API jest wpisany na stałe w kodzie server.js
+
 # Deklaracja portu na ktorym aplikacja ma nasluchiwac
 EXPOSE 3000
 
