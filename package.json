@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cross-spawn": "7.0.5",
     "node-fetch": "^3.3.1"
   }
 }
