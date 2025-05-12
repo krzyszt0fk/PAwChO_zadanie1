@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aplikacja pogodowa</title>
+</head>
+<body>
+<h1>Pogoda</h1>
+
+
+<!-- Wybór kraju -->
+<label for="country">Kraj:</label>
+<select id="country">
+  <option value="">-- Wybierz kraj --</option>
+  <option value="Poland">Polska</option>
+  <option value="United States">USA</option>
+  <option value="United Kingdom">Wielka Brytania</option>
+</select>
+<p></p>
+<!-- Wybór miasta (dynamicznie aktualizowane) -->
+<label for="city">Miasto:</label>
+<select id="city">
+  <option value="">-- Wybierz miasto --</option>
+</select>
+<p></p>
+<button id="btn">Pokaż pogodę</button>
+
+<!-- Kontener na wyświetlaną pogodę -->
+<div id="weather"></div>
+
+<script>
+  // Słownik miast dla każdego kraju
+  const cities = {
+    Poland: ['Warszawa', 'Krakow', 'Gdansk'],
+    'United States': ['New York', 'Los Angeles', 'Chicago'],
+    'United Kingdom': ['London', 'Manchester', 'Birmingham']
+  };
+  const countrySelect = document.getElementById('country');
+  const citySelect = document.getElementById('city');
+
+  //załadowanie odpowiednich miast po wyborze kraju
+  countrySelect.addEventListener('change', () => {
+    citySelect.innerHTML = '<option value="">-- Wybierz miasto --</option>';
+    (cities[countrySelect.value] || []).forEach(city => {
+      const opt = document.createElement('option'); opt.value = city; opt.textContent = city;
+      citySelect.appendChild(opt);
+    });
+  });
+  //Wyswietlenie pogody po kliknięciu przycisku
+  document.getElementById('btn').addEventListener('click', async () => {
+    const country = countrySelect.value;
+    const city = citySelect.value;
+    if (!country || !city) {
+      alert('Prosze wybrac kraj i miasto');
+      return;
+    }
+    const res = await fetch(`/weather?country=${country}&city=${city}`);
+    const data = await res.json();
+    const el = document.getElementById('weather');
+    if (data.error) el.textContent = data.error;
+    else el.innerHTML = `
+        <h2>Pogoda w ${city}, ${country}</h2>
+        <p>Temperatura: ${data.main.temp} °C</p>
+        <p>${data.weather[0].description}</p>
+        <p>Wilgotnosc: ${data.main.humidity}%</p>
+      `;
+  });
+</script>
+</body>
+</html>
