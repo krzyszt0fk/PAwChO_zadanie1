@@ -6,7 +6,7 @@ Do sprawdzenia zagrożeń zostało wykorzystane narzędzie Trivy. Zostało użyt
 trivy image  weather-app:latest
 ```
 Wynik działania polecenia:
-![Wynik polecenia build](img/trivy.PNG)
+![Wynik polecenia trivy](img/trivy.PNG)
 W sprawdzanym obrazie nie został wykryte podatności na zagrożenia.
 ## 2. Polecenie uruchamiające kontener
 ```shell
