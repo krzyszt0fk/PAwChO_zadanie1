@@ -18,14 +18,13 @@ COPY . .
 FROM node:18-alpine AS runtime
 
 LABEL org.opencontainers.image.authors="Krzysztof Ksiezki"
-
+#usuniecie npm
+RUN rm -rf /usr/local/lib/node_modules/npm
 WORKDIR /app
 
 #kopiowanie zbudowanych modułów, pliku server.js, frontendu i package.json z 1 etapu
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/server.js ./server.js
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app /app
+
 # Zmienna środowiskowa PORT
 ENV PORT=3000
 #klucz API jest wpisany na stałe w kodzie server.js
