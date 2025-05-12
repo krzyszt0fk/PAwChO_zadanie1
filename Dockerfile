@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.authors="Krzysztof Ksiezki"
 WORKDIR /app
 
 #kopiowanie package.json
-COPY package.json package-lock.json* ./
+COPY package.json package-lock.json ./
 #instalacja zależności
 RUN npm ci --only=production
 
